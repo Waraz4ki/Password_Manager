@@ -33,5 +33,3 @@ def decrypt_file(data, used_key):
 
     with open(data, "wb") as file:
         file.write(encryptet_data)
-
-decrypt_file("data/test", "data/encryption_key.key")
