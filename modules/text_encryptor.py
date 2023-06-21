@@ -1,20 +1,23 @@
 
 from cryptography.fernet import Fernet
 
-def write_key():
+# Create/Modify a Key
+def write_key(key_dir):
     key = Fernet.generate_key()
-    with open("data/encryption_key.key", "wb") as key_file:
+    with open(key_dir, "wb") as key_file:
         key_file.write(key)
 
-def load_key():
-    return open("data/encryption_key.key", "rb").read()
-    
+# Load a created key using Parameters
+def load_key(key):
+    return open(key, "rb").read()
+
+
 # Encode string to bytes to enrcypt it
-def encrypt_string(string):
-    encoded_string = string.encode()
-    f = Fernet(load_key())
+def encrypt_string(data, used_key):
+    encoded_string = data.encode()
+    
+    f = Fernet(load_key(used_key))
+
     encryptet = f.encrypt(encoded_string)
     print(encryptet)
-
-encrypt_string("hi")
 
