@@ -1,5 +1,6 @@
 from cryptography.fernet import Fernet
 
+
 # Create/Modify a Key
 def write_key(key_dir):
     key = Fernet.generate_key()
