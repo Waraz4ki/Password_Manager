@@ -1,25 +1,16 @@
-from encryption import file_encryptor
-from cryptography.fernet import Fernet
+from encryption import AES as aes
 
-encoding = "utf-8"
-key = "lxp0wlS5yygvg2jyl1AS3toNKvhewzhulAmMMPyj0Co="
+key_location = "data/key"
+AES = aes.AESCipher(key_location)
 
-encrypt = Fernet(key).encrypt
-
-title = encrypt((input("Title: ").encode(encoding)))
-print(Fernet(key).decrypt(title))
-username = encrypt((input("Name: ").encode(encoding)))
-password = encrypt((input("Pass: ").encode(encoding)))
-
+Title = AES.encrypt(input(""))
+Name = AES.encrypt(input(""))
+Password = AES.encrypt(input(""))
 
 def write_entry(save_file):
     with open(save_file, "a") as file:
-        file.write(title.decode(encoding))
-        file.write(username.decode(encoding))
-        file.write(password.decode(encoding))
+        file.write(Title)
+        file.write(Name)
+        file.write(Password)
 
-
-
-    
-    
-    
+write_entry("data/moritz.kd")
