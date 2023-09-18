@@ -4,8 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
-    <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-    <title>Open Database -</title>
+    <title>Open Database - </title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
       html,
@@ -26,9 +25,15 @@
     </header>
 
     <main>
-      <form action="" method="post">
+      <form method="POST">
         <label for="master_password">Master Password:</label>
-        <input type="text" id="master_password" required />
+        <input
+          type="text"
+          class="form-control"
+          id="master_password"
+          name="master_password"
+          required
+        />
         <button>Show</button>
 
         <br /><br />
@@ -36,20 +41,20 @@
         <label for="key_file">Key File:</label>
         <input
           type="file"
-          id="key_file"
-          name="key_file"
+          id="database"
+          name="database"
           accept=".kd"
           required
         />
         <button>Icon</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </form>
       <hr />
       <br />
     </main>
 
     <footer>
-      <a
-        href="https://flask.palletsprojects.com/en/2.3.x/quickstart/">
+      <a href="https://flask.palletsprojects.com/en/2.3.x/quickstart/">
         <button type="button" id="help">Help</button>
       </a>
       <a href="main.html">

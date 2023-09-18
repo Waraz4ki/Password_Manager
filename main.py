@@ -1,18 +1,12 @@
-from flask import Flask, render_template
-from flaskwebgui import FlaskUI
 import psutil
 
+from flask import Flask, render_template
+from UI_SERVER import create_app
+from flaskwebgui import FlaskUI
 
 
-app = Flask(__name__)
+app = create_app()
 
-@app.route("/")
-def hello():
-    return render_template("open_database.html")
-
-@app.route("/cpu")
-def cpu():
-    return str(psutil.cpu_percent(interval=1))
 
 if __name__ == '__main__':
     app.run(debug=True)
