@@ -3,15 +3,25 @@ import hashlib
 import secrets
 
 
-class DB:
-    def __init__(self, DATABASE):
+class DBClass:
+    def __init__(self, DATABASE="test.db"):
         self.connection = sqlite3.connect(DATABASE)
         self.cursor = self.connection.cursor()
-        self.DATABASE=DATABASE
+        self.DATABASE = DATABASE
     
-    def firstSetup(self):
-        self.cursor.execute("CREATE TABLE " + self.DATABASE + "(Title text, Name text, Password text, Notes text)")
-    
+    def firstSetup(self, masterKEY):
+        data=[masterKEY]
+        with self.connection:
+            self.cursor.execute("CREATE TABLE Config (masterKEY)")
+            self.cursor.execute("INSERT INTO Config VALUES (?)", data)
+            self.connection.commit()
+            self.cursor.execute("CREATE TABLE test12(Title text, Name text, Password text, Notes text)")
+
+    def openingCheck(self, masterKEY):
+        with self.connection:
+            res = self.cursor.execute("SELECT masterKEY FROM Config")
+            print(type(res.fetchall()))
+        
     def insert_entry(self, Title, Name, Password, Notes):
         with self.connection:
             self.cursor.execute("INSERT INTO " + self.DATABASE + " VALUES (:Title, :Name, :Password, :Notes)", 
@@ -24,17 +34,17 @@ class DB:
     
     def delete_entry(self, Title, Name):
         with self.connection:
-            self.cursor.execute("DELETE from "+ self.DATABASE + " WHERE Title=:Title AND Name=:Name",
+            self.cursor.execute("DELETE from " + self.DATABASE + " WHERE Title=:Title AND Name=:Name",
                                 {'Title': Title, 'Name': Name})
 
     def get_entry_by_title(self, Title):
         with self.connection:
             self.cursor.execute("SELECT * FROM " + self.DATABASE + " WHERE Title=:Title", 
-                                {'Title':Title})
+                                {'Title': Title})
             return self.cursor.fetchall()
     
     def get_every_entry(self):
         with self.connection:
-            self.cursor.execute("SELECT * FROM "+ self.DATABASE)
+            self.cursor.execute("SELECT * FROM " + self.DATABASE)
             print(self.cursor.fetchall())
             return self.cursor.fetchall()

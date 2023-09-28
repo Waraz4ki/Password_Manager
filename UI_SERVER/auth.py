@@ -1,32 +1,54 @@
-from UI_SERVER import dbConfuese as DB
-from AES import AESCipher
-from flask import Blueprint, render_template, request, flash
+import sqlite3
+import os
+import sys
+import hashlib
+
+from UI_SERVER import db as DB
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 
 
 auth = Blueprint("auth", __name__)
-AES = AESCipher()
 
 
-@auth.route("/Home", methods=["GET", "POST"])
-def home():
-    if request.method == "POST":
-        pass
-    return render_template("home.html")
-
-@auth.route("/open_database", methods=["GET", "POST"])
+@auth.route("/view")
+def test():
+    return render_template("file_view.html")
+    
+    
+@auth.route("/", methods=["GET", "POST"])
 def open_database():
     if request.method == "POST":
-        DATABASE = request.form.get("databaseText")
-        db = DB.DB(DATABASE)
-        db.get_every_entry()
-    return render_template("open_database.html")
+        DATABASE = request.form.get("DATABASE")
+        #try: 
+        #   
+        #    masterKEY = hashlib.sha256(request.form.get("masterKEY").encode(), usedforsecurity=True).hexdigest()
+        #    print(masterKEY)
+        #    db = DB.DBClass(DATABASE)
+        #    db.openingCheck(masterKEY)
+        #
+        #except os.path.exists(DATABASE) is not True:
+        #    flash("Database doesn't exsit")
 
-@auth.route("/create_database", methods=["GET", "POST"])
-def sign_up():
+        if os.path.exists(DATABASE) is not True:
+            flash("Database doesn't exist")
+        else:
+            masterKEY = hashlib.sha256(request.form.get("masterKEY").encode(), usedforsecurity=True).hexdigest()
+            print(masterKEY)
+            db = DB.DBClass(DATABASE)
+            db.openingCheck(masterKEY)
+            
+    return render_template("index.html")
+
+@auth.route("/createDatabase", methods=["GET", "POST"])
+def create_database():
     if request.method == "POST":
         DATABASE = request.form.get("DATABASE")
-        masterKEY = request.form.get("masterKEY").encode()
-        db = DB.DB(DATABASE)
-        db.firstSetup()
-
-    return render_template("create_database.html")
+        if os.path.exists(DATABASE) is True:
+            flash("Database already exists")
+        else:
+            masterKEY = hashlib.sha256(request.form.get("masterKEY").encode(), usedforsecurity=True).hexdigest()
+            print(masterKEY)
+            db = DB.DBClass(DATABASE)
+            db.firstSetup(masterKEY)
+            return redirect(url_for("auth.open_database"))
+    return render_template("createDatabase.html")

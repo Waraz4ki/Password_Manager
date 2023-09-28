@@ -1,16 +1,15 @@
-import secrets
+# import secrets
+# import string
 
-from UI_SERVER import dbConfuese as DB
+from UI_SERVER import db as DB
 from flask import Blueprint, render_template, request
 
 
 views = Blueprint("views", __name__)
 
-Database = secrets.token_hex()
-
-@views.route("/")
+@views.route("/home")
 def home():
-    return render_template("home.html", text=Database)
+    return render_template("home.html")
 
 @views.route("/insert_entry", methods=["GET", "POST"])
 def insert_entry():
@@ -20,6 +19,14 @@ def insert_entry():
         Notes = request.form.get("Notes")
         Title = request.form.get("Title")
         
-        db = DB.DB("DATABASE")
+        db = DB.DBClass("DATABASE")
         db.insert_entry(Title, UserName, Password, Notes)
     return render_template("insert_entry.html")
+
+@views.route("/view_file", methods=["GET", "POST"])
+def view_file():
+    if request.method == "POST":
+        db = DB.DBClass("DATABASE")
+        data = db.get_every_entry()
+    return render_template("view_file.html")
+        

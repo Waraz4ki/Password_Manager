@@ -1,5 +1,7 @@
 env/
 backup/
+data/
+
 .venv/
 
 *.pyc

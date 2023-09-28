@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="{{url_for('static', filename='styles/index.css')}}">
+  <title>Open Database</title>
+</head>
+<body>
+    {% with messages = get_flashed_messages()%}
+        {%if messages %}
+            {%for message in messages%}
+                <div class="alert">
+                    {{message}}
+                    <button class="b">
+                        Ok
+                    </button>
+                </div>
+            {%endfor%}
+        {% endif%}
+    {% endwith%}
+    <section>
+        <div class="form-box">
+            <div class="form-value">
+                <form class="from" method="POST">
+                    <h2>Open Database</h2>
+                    <div class="inputbox">
+                        <ion-icon name="key-outline"></ion-icon>
+                        <input name="masterKEY" id="masterKEY" type="password" required>
+                        <label for="">Master Key</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input name="DATABASE" id="DATABASE" type="text" required>
+                        <label for="">Database</label>
+                    </div>
+                    <div class="forget">
+                        <label for=""><input name="remember" type="checkbox">Remember Database</label>                      
+                    </div>
+                    <button type="submit">Open</button>
+                    <div class="register">
+                        <p>Don't Have a Database? <a href="/createDatabase">Create One</a></p>
+                    </div>
+                    <div class="trouble">
+                        <p><a href="pass">Forgot your Master Key?</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    <script type="module" src="/UI_SERVER/static/key-outline.svg"></script>
+    
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

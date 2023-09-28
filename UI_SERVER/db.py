@@ -1,42 +1,51 @@
 import sqlite3
+import hashlib
 import secrets
 
-class DBDatabase:
-#! DON'T USE F STRINGS FOR THIS STUFF
-#! SQL INJECTIONS WILL COME FOR YOU
-    def __init__(self, Database, Table):
-        self.Table = Table
-        self.connection = sqlite3.connect(Database)
+
+class DBClass:
+    def __init__(self, DATABASE):
+        self.DATABASE= DATABASE
+        self.connection = sqlite3.connect(DATABASE)
         self.cursor = self.connection.cursor()
-        self.cursor.execute("CREATE TABLE " + Table + "(Title text, Name text, Password text)")
 
-    def insert_entry(self, Title, Name, Password):
+    
+    def firstSetup(self, masterKEY):
+        data=[masterKEY]
         with self.connection:
-            self.cursor.execute("INSERT INTO " + self.Table + " VALUES (:Title, :Name, :Password)", 
-                                {'Title': Title, 'Name': Name, 'Password': Password})
+            self.cursor.execute("CREATE TABLE Config (masterKEY)")
+            self.cursor.execute("INSERT INTO Config VALUES (?)", data)
+            self.connection.commit()
+            self.cursor.execute("CREATE TABLE test12(Title text, Name text, Password text, Notes text)")
 
-    def get_entry_by_title(self, Title, Name, Password):
+    def openingCheck(self, masterKEY):
         with self.connection:
-            self.cursor.execute("SELECT * FROM " + self.Table + " WHERE Title=:Title", 
-                                {'Title':Title})
-            print(self.cursor.fetchone())
-            return self.cursor.fetchone()
-            
-    def get_entry(self, Title, Name, Password):
+            res = self.cursor.execute("SELECT masterKEY FROM Config")
+            res.fetchall()
+        
+    def insert_entry(self, Title, Name, Password, Notes):
         with self.connection:
-            self.cursor.execute("SELECT * FROM " + self.Table)
-            print(self.cursor.fetchall())
-            return self.cursor.fetchall()
-
-    #!Doesn't quit work
+            self.cursor.execute("INSERT INTO " + self.DATABASE + " VALUES (:Title, :Name, :Password, :Notes)", 
+                                {'Title': Title, 'Name': Name, 'Password': Password, 'Notes': Notes})
+    
     def update_entry(self, Title, Name, Password):
         with self.connection:
-            self.cursor.execute("UPDATE " + self.Table + " SET Title=:Title, Name=:Name, Password=:Password WHERE Title=:Title AND Name=:Name", 
-                        {'Title': Title, 'Name': Name, 'Password': Password})
-
-    def delete_entry(self, Title, Name, Password):
+            self.cursor.execute("UPDATE " + self.DATABASE + "SET",
+                                {})
+    
+    def delete_entry(self, Title, Name):
         with self.connection:
-            self.cursor.execute("DELETE from "+ self.Table + " WHERE Title=:Title AND Name=:Name",
-                        {'Title': Title, 'Name': Name})
+            self.cursor.execute("DELETE from " + self.DATABASE + " WHERE Title=:Title AND Name=:Name",
+                                {'Title': Title, 'Name': Name})
 
-            
+    def get_entry_by_title(self, Title):
+        with self.connection:
+            self.cursor.execute("SELECT * FROM " + self.DATABASE + " WHERE Title=:Title", 
+                                {'Title': Title})
+            return self.cursor.fetchall()
+    
+    def get_every_entry(self):
+        with self.connection:
+            self.cursor.execute("SELECT * FROM " + self.DATABASE)
+            print(self.cursor.fetchall())
+            return self.cursor.fetchall()
