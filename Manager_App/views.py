@@ -1,7 +1,7 @@
 # import secrets
 # import string
 
-from UI_SERVER import db as DB
+from Manager_App import db as DB
 from flask import Blueprint, render_template, request, flash
 
 
