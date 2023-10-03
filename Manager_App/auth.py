@@ -2,7 +2,7 @@ import os
 import sys
 import hashlib
 
-from UI_SERVER import db as DB
+from Manager_App import db as DB
 from flask import Blueprint, render_template, request, flash, redirect, url_for, get_flashed_messages
 
 

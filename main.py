@@ -1,7 +1,7 @@
 # import psutil
 
 # from flask import Flask, render_template
-from UI_SERVER import create_app
+from Manager_App import create_app
 from flaskwebgui import FlaskUI
 
 
