@@ -5,12 +5,12 @@
   <title>Open Database</title>
 </head>
 <body>
-    {% with messages = get_flashed_messages()%}
+    {% with messages = get_flashed_messages(category_filter="error")%}
         {%if messages %}
             {%for message in messages%}
                 <div class="alert">
                     {{message}}
-                    <button class="b">
+                    <button class="acknowledge" type="submit">
                         Ok
                     </button>
                 </div>

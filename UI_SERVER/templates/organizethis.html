@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<link rel="stylesheet" href="/UI_SERVER/static/styles/dropdown.css">
+    <link rel="stylesheet" href="/UI_SERVER/static/styles/orgstyle.css">-->
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/orgstyle.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/dropdown.css')}}">
+    <title>Document</title>
+</head>
+<body>
+    <section>
+        <header>
+            <div class="Button-Container" name="Button">
+                <div class="button-content" name="button">
+                    <div class="dropdown">
+                        <button class="dropbtn">File</button>
+                        <div class="dropdown-content">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropbtn">Entry</button>
+                        <div class="dropdown-content">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropbtn">View</button>
+                        <div class="dropdown-content">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropbtn">Tools</button>
+                        <div class="dropdown-content">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                    </div>
+                    <div class="dropdown">
+                        <button class="dropbtn">Help</button>
+                        <div class="dropdown-content">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="Content" name="Content">
+            <div class="Group-Container" name="Group">
+                <div class="group-content" name="group">
+                    <p style="color: white;">{{database}}</p><hr>
+                    <button>asd</button>
+                </div>
+            </div>
+            <div class="Entry-Container" name="Entry">
+                <div class="entry-content" name="entry">      
+            </div>
+        </div>
+
+        <footer>
+            <div class="CommandLine-Container" name="CommandLine">
+                <div class="commandline-content"name="commandline">
+                </div>
+            </div>
+        </footer>
+    </section>
+</body>
+</html>

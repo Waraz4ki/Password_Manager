@@ -2,6 +2,7 @@ import sqlite3
 import hashlib
 import secrets
 
+#! Switch to MYSQL someday
 
 class DBClass:
     def __init__(self, DATABASE):
@@ -18,10 +19,10 @@ class DBClass:
             self.connection.commit()
             self.cursor.execute("CREATE TABLE test12(Title text, Name text, Password text, Notes text)")
 
-    def openingCheck(self, masterKEY):
+    def openingCheck(self):
         with self.connection:
             res = self.cursor.execute("SELECT masterKEY FROM Config")
-            res.fetchall()
+            return res.fetchone()[0]
         
     def insert_entry(self, Title, Name, Password, Notes):
         with self.connection:

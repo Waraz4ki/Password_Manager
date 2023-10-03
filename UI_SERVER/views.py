@@ -2,14 +2,22 @@
 # import string
 
 from UI_SERVER import db as DB
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, flash
 
 
 views = Blueprint("views", __name__)
+DATABASE = "Datenbank"
+
 
 @views.route("/home")
 def home():
     return render_template("home.html")
+
+@views.route("/file", methods=["GET", "POST"])
+def file_view():
+    if request.method == "GET":
+        pass
+    return render_template("organizethis.html", database = DATABASE)
 
 @views.route("/insert_entry", methods=["GET", "POST"])
 def insert_entry():
