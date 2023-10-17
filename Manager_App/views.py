@@ -1,7 +1,6 @@
 # import secrets
 # import string
 
-from Manager_App import db as DB
 from flask import Blueprint, render_template, request, flash
 
 
@@ -27,14 +26,15 @@ def insert_entry():
         Notes = request.form.get("Notes")
         Title = request.form.get("Title")
         
-        db = DB.DBClass("DATABASE")
-        db.insert_entry(Title, UserName, Password, Notes)
+#        db = DB.DBClass("DATABASE")
+#        db.insert_entry(Title, UserName, Password, Notes)
     return render_template("insert_entry.html")
 
 @views.route("/view_file", methods=["GET", "POST"])
 def view_file():
     if request.method == "POST":
-        db = DB.DBClass("DATABASE")
-        data = db.get_every_entry()
+        pass
+#        db = DB.DBClass("DATABASE")
+#        data = db.get_every_entry()
     return render_template("view_file.html")
         
