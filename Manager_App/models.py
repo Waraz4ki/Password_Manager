@@ -25,23 +25,23 @@ class Entry(Base):
     __tablename__ = "Entry"
 
     id : Mapped[int] = mapped_column(primary_key=True)
-    __title__ : Mapped[Optional[str]]
-    __name__ : Mapped[Optional[str]]
-    __password__ : Mapped[Optional[str]]
-    __url__ : Mapped[Optional[str]]
+    title : Mapped[Optional[str]]
+    name : Mapped[Optional[str]]
+    password : Mapped[Optional[str]]
+    url : Mapped[Optional[str]]
 
     def __repr__(self) -> str:
-        return f"{self.id}, {self.__title__}, {self.__name__}, {self.__password__}, {self.__url__}"
+        return f"{self.id}, {self.title}, {self.name}, {self.password}, {self.url}"
 
 
 class Group(Base):
     __tablename__ = "Group"
     
     id : Mapped[int] = mapped_column(primary_key=True)
-    __group_name__ : Mapped[Optional[str]]
+    group_name : Mapped[Optional[str]]
 
     def __rep__(self) -> str:
-        return f"{self.id}, {self.__group_name__}"
+        return f"{self.id}, {self.group_name}"
 
 
 if __name__ == "__main__":

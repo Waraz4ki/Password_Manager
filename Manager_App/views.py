@@ -30,7 +30,7 @@ def add_entry():
 
             with __create_engine__(db_name).begin() as connection:
                 connection.execute(insert(Entry),[
-                    {"__title__":title, "__name__":name, "__password__":password, "__url__":url}
+                    {"title":title, "name":name, "password":password, "url":url}
                 ],)
             return redirect(url_for("views.file_view"))
         
