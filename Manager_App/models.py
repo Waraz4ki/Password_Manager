@@ -3,7 +3,7 @@ from typing import Any, Optional, List
 from sqlalchemy import MetaData, create_engine
 from sqlalchemy import insert, update, delete, select
 from sqlalchemy.orm import DeclarativeBase, relationship, Mapped, mapped_column
-#from sqlalchemy import Table, Column, Integer, String, ForeignKey, DATETIME, DATE
+
 
 metadata_obj = MetaData()
 engine = create_engine(f"sqlite:///data/asda.db", echo=True)
@@ -25,22 +25,23 @@ class Entry(Base):
     __tablename__ = "Entry"
 
     id : Mapped[int] = mapped_column(primary_key=True)
-    title : Mapped[Optional[str]]
-    password : Mapped[Optional[str]]
-    notes : Mapped[Optional[str]]
+    __title__ : Mapped[Optional[str]]
+    __name__ : Mapped[Optional[str]]
+    __password__ : Mapped[Optional[str]]
+    __url__ : Mapped[Optional[str]]
 
     def __repr__(self) -> str:
-        return f"{self.id}, {self.title}, {self.password}, {self.notes}"
+        return f"{self.id}, {self.__title__}, {self.__name__}, {self.__password__}, {self.__url__}"
 
 
 class Group(Base):
     __tablename__ = "Group"
     
     id : Mapped[int] = mapped_column(primary_key=True)
-    group_name : Mapped[Optional[str]]
+    __group_name__ : Mapped[Optional[str]]
 
     def __rep__(self) -> str:
-        return f"{self.id}, {self.group_name}"
+        return f"{self.id}, {self.__group_name__}"
 
 
 if __name__ == "__main__":

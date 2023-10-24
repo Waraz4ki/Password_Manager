@@ -1,18 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" href="{{url_for('static', filename='styles/index.css')}}">
-  <title>Create Database</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/index.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/error.css')}}">
+    <title>Create Database</title>
 </head>
 <body>
     <section>
+<!--    {% with messages = get_flashed_messages(category_filter="error")%}
+            {%if messages %}
+                {%for message in messages%}
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {%endfor%}
+            {% endif%}
+        {% endwith%}-->
         <div class="form-box">
             <div class="form-value">
                 <form class="from" method="POST">
                     <h2>Create Database</h2>
                     <div class="inputbox">
                         <ion-icon name="key-outline"></ion-icon>
-                        <input name="masterKEY" id="masterKEY" type="password" required>
+                        <input name="master_key" id="master_key" type="password" required>
                         <label for="">Set Master Key</label>
                     </div>
                     <div class="inputbox">
@@ -21,6 +33,16 @@
                         <label for="">Set Database Name</label>
                     </div>
                     <button type="submit">Create</button>
+                    {% with messages = get_flashed_messages(category_filter="error")%}
+                        {%if messages %}
+                            {%for message in messages%}
+                                <div class="alert alert-danger alert-dismissible fade show">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {%endfor%}
+                        {% endif%}
+                    {% endwith%}
                 </form>
             </div>
         </div>

@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from Manager_App import create_app
-from flaskwebgui import FlaskUI, find_browser
-import json
+from flaskwebgui import FlaskUI
+
 app = create_app()
 
 @app.errorhandler(404)

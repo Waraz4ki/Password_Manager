@@ -1,7 +1,6 @@
 import secrets
 import os
 
-#from sqlalchemy import create_engine
 from flask import Flask
 
 
@@ -11,11 +10,11 @@ def create_app():
         SECRET_KEY = "adfhbatg",
         DATABASE = os.path.join(app.instance_path,"")
     )
-
+    
     from .views import views
     from .auth import auth
-
+    
     app.register_blueprint(views)
     app.register_blueprint(auth)
-    
+
     return app
