@@ -1,6 +1,3 @@
-# import secrets
-# import string
-
 import secrets
 from Manager_App.models import Base, Entry, Group
 from flask import Blueprint, render_template, request, flash, redirect, url_for
@@ -16,8 +13,12 @@ def __create_engine__(__db_name__):
 @views.route("/file", methods=["GET", "POST"])
 def file_view():
     if request.method == "GET":
-        pass
-    return render_template("organizethis.html", database = db_name)
+        
+        with __create_engine__(db_name).begin() as connection:
+            entries = connection.execute(select(Entry)).columns("title","name","password","url").all()
+            print(entries)
+                
+    return render_template("organizethis.html", database=db_name, entries=entries)
 
 @views.route("/funcs/addEntry", methods = ["GET", "POST"])
 def add_entry():

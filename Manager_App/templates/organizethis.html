@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{url_for('static', filename='styles/orgstyle.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='styles/dropdown.css')}}">
-    <title>Open Database - {{db_name}}</title>
+    <title>Open Database - {{database}}</title>
 </head>
 <body>
     <section>
@@ -59,12 +59,41 @@
 
         <div class="Content" name="Content">
             <div class="Group-Container" name="Group">
-                <p class="Title" style="color: white;", align="center">{{db_name}}</p>
+                <p class="Title" style="color: white;", align="center">{{database}}</p>
                 <div class="group-content" name="group">
                 </div>
             </div>
             <div class="Entry-Container" name="Entry">
-                <div class="entry-content" name="entry">      
+                <div class="entry-content">
+                    <table width="100%">
+                        <tr style="color: #fff;">
+                            <th style="margin: 10px;">Title</th>
+                            <th>Name</th>
+                            <th>Password</th>
+                            <th>URL</th>
+                        </tr>
+                        {% for entry in entries %}
+                            <tr align="center">
+                                {% for row in entry %}
+                                    <div class="row">
+                                        <td>{{row}}</td>
+                                    </div>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <!--<div class="entry-content" name="entry">
+                    {% for entry in entries %}
+                        <div class="entry">
+                            {% for row in entry %}
+                                <div class="row">
+                                    <p>{{row}}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>-->  
             </div>
         </div>
 
