@@ -1,4 +1,5 @@
 import secrets
+import json
 from Manager_App.models import Base, Entry, Group
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from sqlalchemy import create_engine, MetaData, select, update, delete, insert
@@ -16,9 +17,9 @@ def file_view():
         
         with __create_engine__(db_name).begin() as connection:
             entries = connection.execute(select(Entry)).columns("title","name","password","url").all()
-            print(entries)
+            groups = connection.execute(select(Group)).columns("group_name").all()
                 
-    return render_template("organizethis.html", database=db_name, entries=entries)
+    return render_template("organizethis.html", database=db_name, entries=entries, groups=groups)
 
 @views.route("/funcs/addEntry", methods = ["GET", "POST"])
 def add_entry():

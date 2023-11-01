@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{url_for('static', filename='styles/orgstyle.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='styles/dropdown.css')}}">
-    <title>Open Database - {{database}}</title>
+    <title>Open Workspace - {{database}}</title>
 </head>
 <body>
+    <style>tr{height: 4.5vh;}</style>
     <section>
         <header>
             <div class="Button-Container" name="Button">
@@ -61,13 +62,24 @@
             <div class="Group-Container" name="Group">
                 <p class="Title" style="color: white;", align="center">{{database}}</p>
                 <div class="group-content" name="group">
+                    <table width="100%">
+                        {% for group in groups %}
+                            <tr style="color: #fff;">
+                                {% for grouprow in group %}
+                                    <div class="grouprow">
+                                        <td>{{grouprow}}</td>
+                                    </div>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
                 </div>
             </div>
             <div class="Entry-Container" name="Entry">
                 <div class="entry-content">
                     <table width="100%">
-                        <tr style="color: #fff;">
-                            <th style="margin: 10px;">Title</th>
+                        <tr style="color: #fff; height: 5vh;">
+                            <th>Title</th>
                             <th>Name</th>
                             <th>Password</th>
                             <th>URL</th>
@@ -79,21 +91,11 @@
                                         <td>{{row}}</td>
                                     </div>
                                 {% endfor %}
+                                <td><button style="width:1vw;height:2vh;"><ion-icon name="list-outline" style="color: black;"></ion-icon></button></td>
                             </tr>
                         {% endfor %}
                     </table>
                 </div>
-                <!--<div class="entry-content" name="entry">
-                    {% for entry in entries %}
-                        <div class="entry">
-                            {% for row in entry %}
-                                <div class="row">
-                                    <p>{{row}}</p>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% endfor %}
-                </div>-->  
             </div>
         </div>
 
@@ -104,5 +106,7 @@
             </div>
         </footer>
     </section>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

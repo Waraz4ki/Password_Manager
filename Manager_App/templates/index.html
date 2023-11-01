@@ -28,12 +28,12 @@
                         <label for="">Master Key</label>
                     </div>
                     <div class="inputbox">
-                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <ion-icon name="documents-outline"></ion-icon>
                         <input name="db_name" id="db_name" type="text" required>
                         <label for="">Database</label>
                     </div>
                     <div class="forget">
-                        <label for=""><input name="remember" type="checkbox">Remember Database</label>                      
+                        <label for=""><input name="remember" type="checkbox" onclick="showpass()">Remember Database</label>                      
                     </div>
                     <button type="submit">Open</button>
                     <div class="register">
@@ -46,7 +46,7 @@
             </div>
         </div>
     </section>
-    
+    <script language="JavaScript" src="/static/src/showpass.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
