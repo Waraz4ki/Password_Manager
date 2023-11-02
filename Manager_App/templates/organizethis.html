@@ -62,17 +62,25 @@
             <div class="Group-Container" name="Group">
                 <p class="Title" style="color: white;", align="center">{{database}}</p>
                 <div class="group-content" name="group">
-                    <table width="100%">
+                    {% for group in groups %}
+                        <div class="grouprow">
+                            {% for grouprow in group %}
+                                <button class="groupselect" name="select" onclick=""><td>{{grouprow}}</td></button>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    <!--<table width="100%">
                         {% for group in groups %}
                             <tr style="color: #fff;">
                                 {% for grouprow in group %}
                                     <div class="grouprow">
+                                        <button></button>
                                         <td>{{grouprow}}</td>
                                     </div>
                                 {% endfor %}
                             </tr>
                         {% endfor %}
-                    </table>
+                    </table>-->
                 </div>
             </div>
             <div class="Entry-Container" name="Entry">
@@ -106,6 +114,7 @@
             </div>
         </footer>
     </section>
+    <script lang="JavaScript" src="/static/src/selectgroup.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>

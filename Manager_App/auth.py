@@ -2,7 +2,6 @@ import os
 import sys
 import hashlib
 
-
 from Manager_App.models import Base, Entry, Group, Config
 from flask import Blueprint, render_template, request, flash, redirect, url_for, get_flashed_messages
 from sqlalchemy import create_engine, MetaData, select, update, delete, insert
@@ -15,7 +14,7 @@ def test2():
     return render_template("organizethis.html")
 
 def __create_engine__(__db_name__):
-    engine = create_engine(f"sqlite:///data/{__db_name__}.db")
+    engine = create_engine(f"sqlite:///data/{__db_name__}.db", echo=True)
     return engine
 
 @auth.route("/", methods=["GET", "POST"])
@@ -25,7 +24,7 @@ def open_database():
             #! Look at Bcrypt or Argon2
             db_name = request.form.get("db_name")
             if os.path.exists(f"data/{db_name}.db") is False:
-                raise FileNotFoundError 
+                raise FileNotFoundError
             
             master_key = hashlib.sha256(request.form.get("master_key").encode(), usedforsecurity=True).hexdigest()
             
