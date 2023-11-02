@@ -4,9 +4,10 @@ import hashlib
 
 from werkzeug.security import check_password_hash
 
-from Manager_App import create_database, app
+from Manager_App import app
 from Manager_App.models import Base, Entry, Group, Config, db
 
+from sqlalchemy import select
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 
 auth = Blueprint("auth", __name__)
@@ -21,25 +22,26 @@ def openDatabase():
     if request.method == "POST":
         try:
             db_name = request.form.get("db_name")
-            if os.path.exists(f"instance/{db_name}.db") is False:
+            if os.path.exists(f"instance/awda.db") is False:
                 raise FileNotFoundError
             
-            master_key = request.form.get("master_key")
-            hash_master_key = db.get_or_404(entity=Config.query, ident=Config.master_key)
-            if check_password_hash(hash_master_key, master_key) is False:
-                raise PermissionError
+            master_key = hashlib.sha256(request.form.get("master_key").encode(), usedforsecurity=True).hexdigest()
+            print(master_key)
+            hashed_master_key = db.session.execute(select(Config.master_key)).fetchone()[0]
+            print(hashed_master_key)
             
-            return redirect(url_for("views.workspace", db_name=db_name))
-
+            if master_key == hashed_master_key:
+            #TODO If you have time figure out why this won't work
+            #if check_password_hash(hashed_master_key, master_key):
+                print("Success")
+                return redirect(url_for("views.workspace", db_name=db_name))
+            else:
+                flash("Master Password is incorrect", category="error")
+           
         except FileNotFoundError:
-            print("1q23412312s")
-            flash("Master Password is False", category="error")
-        except PermissionError:
-            print("122421caf")
+            print("Don't exist")
             flash("Database doesn't exist", category="error")
-        #except Exception:
-        #    print("sacaec")
-        #    flash("Something happened I don't know of", category="critical_error")
+            
     return render_template("index.html")
 
 
@@ -50,18 +52,19 @@ def createDatabase():
             db_name = request.form.get("db_name")
             if os.path.exists(f"data/Datenbank.db") is False:
                 with app.app_context():
-                    print("WPUica")
+                    app.config.update(
+                        SQLALCHEMY_DATABASE_URI = f"sqlite+pysqlite:///{db_name}.db"
+                    )
                     db.create_all()
             else:
-                print("FUCK YOU")
                 raise FileExistsError
             
             configuration = Config(
                 master_key = hashlib.sha256(request.form.get("master_key").encode(), usedforsecurity=True).hexdigest(),
             )
             
-            #db.session.add(configuration)
-            #db.session.commit()
+            db.session.add(configuration)
+            db.session.commit()
             
             return redirect(url_for("auth.openDatabase"))
     

@@ -1,15 +1,10 @@
-from flask_sqlalchemy import SQLAlchemy
-
+from . import db
 from sqlalchemy.sql import func
 from typing import Any, Optional, List
 from sqlalchemy.orm import DeclarativeBase, relationship, Mapped, mapped_column
 
 class Base(DeclarativeBase):
     pass
-
-
-db = SQLAlchemy(model_class=Base)
-
 
 class Config(db.Model):
     __tablename__ = "Config"
