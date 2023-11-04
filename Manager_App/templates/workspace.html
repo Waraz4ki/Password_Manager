@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='styles/orgstyle.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='styles/workspace.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='styles/dropdown.css')}}">
+    <!--With line below you can add Icons on the little bar, but it can't be local it's got to be a route or sth.-->
+    <link rel="shortcut icon" type="image/png" href="/images/icon.ico">
     <title>Open Workspace - {{database}}</title>
 </head>
 <body>
@@ -65,7 +67,7 @@
                     {% for group in groups %}
                         <div class="grouprow">
                             {% for grouprow in group %}
-                                <button class="groupselect" name="select" onclick=""><td>{{grouprow}}</td></button>
+                                <button class="groupselect" name="select" onclick="selectgroup()"><td>{{grouprow}}</td></button>
                             {% endfor %}
                         </div>
                     {% endfor %}

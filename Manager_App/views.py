@@ -1,28 +1,28 @@
 import secrets
+import os
 
-from Manager_App.models import Base, Entry, Group
+from Manager_App import __create_engine__
+from Manager_App.models import Base, Entry, Group, Config
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from sqlalchemy import create_engine, MetaData, select, update, delete, insert
+from sqlalchemy import select, update, delete, insert
 
 views = Blueprint("views", __name__)
-db_name = "Datenbank"
+#db_name = "Datenbank"
 
-def __create_engine__(__db_name__):
-    engine = create_engine(f"sqlite:///data/{__db_name__}.db")
-    return engine
 
-@views.route("/file", methods=["GET", "POST"])
-def file_view():
+@views.route("/workspace/<db_name>", methods=["GET", "POST"])
+def workspace(db_name):
     if request.method == "GET":
         
         with __create_engine__(db_name).begin() as connection:
             groups = connection.execute(select(Group)).columns("group_name").all()
             entries = connection.execute(select(Entry)).columns("title","name","password","url").all()
                 
-    return render_template("organizethis.html", database=db_name, entries=entries, groups=groups)
+    return render_template("workspace.html", database=db_name, entries=entries, groups=groups)
+
 
 @views.route("/funcs/addEntry", methods = ["GET", "POST"])
-def add_entry():
+def add_entry(db_name):
     if request.method == "POST":
         try:
             title = request.form.get("title")
@@ -34,7 +34,7 @@ def add_entry():
                 connection.execute(insert(Entry),[
                     {"title":title, "name":name, "password":password, "url":url}
                 ],)
-            return redirect(url_for("views.file_view"))
+            return redirect(url_for("views.workspace"))
         
         except ValueError:
             pass

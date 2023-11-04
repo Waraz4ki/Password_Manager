@@ -2,20 +2,18 @@ import os
 import sys
 import hashlib
 
+from Manager_App import __create_engine__
 from Manager_App.models import Base, Entry, Group, Config
-from flask import Blueprint, render_template, request, flash, redirect, url_for, get_flashed_messages
-from sqlalchemy import create_engine, MetaData, select, update, delete, insert
-
+from sqlalchemy import select, insert
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 
 auth = Blueprint("auth", __name__)
+
 
 @auth.route("/test")
 def test2():
     return render_template("organizethis.html")
 
-def __create_engine__(__db_name__):
-    engine = create_engine(f"sqlite:///data/{__db_name__}.db", echo=True)
-    return engine
 
 @auth.route("/", methods=["GET", "POST"])
 def open_database():
@@ -32,7 +30,7 @@ def open_database():
                 res = connection.execute(select(Config.master_key))
                 if res.first()[0] != master_key:
                     raise PermissionError
-            return redirect(url_for("views.file_view"))
+            return redirect(url_for("views.workspace", db_name=db_name))
         
         except PermissionError:
             flash("Wrong Master Key", category="error")
