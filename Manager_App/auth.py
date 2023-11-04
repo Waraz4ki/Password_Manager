@@ -22,7 +22,7 @@ def openDatabase():
     if request.method == "POST":
         try:
             db_name = request.form.get("db_name")
-            if os.path.exists(f"instance/awda.db") is False:
+            if os.path.exists(f"instance/{db_name}.db") is False:
                 raise FileNotFoundError
             
             master_key = hashlib.sha256(request.form.get("master_key").encode(), usedforsecurity=True).hexdigest()
@@ -50,11 +50,11 @@ def createDatabase():
     if request.method == "POST":
         try:
             db_name = request.form.get("db_name")
-            if os.path.exists(f"data/Datenbank.db") is False:
+            if os.path.exists(f"data/{db_name}.db"):
+                app.config.update(
+                    SQLALCHEMY_DATABASE_URI = f"sqlite:///{db_name}.db"
+                )
                 with app.app_context():
-                    app.config.update(
-                        SQLALCHEMY_DATABASE_URI = f"sqlite+pysqlite:///{db_name}.db"
-                    )
                     db.create_all()
             else:
                 raise FileExistsError

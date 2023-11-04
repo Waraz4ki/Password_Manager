@@ -21,7 +21,7 @@ def workspace():
 
 
 @views.route("/funcs/addEntry", methods = ["GET", "POST"])
-def add_entry():
+def add_entry(): 
     if request.method == "POST":
         try:
             title = request.form.get("title")
@@ -31,7 +31,7 @@ def add_entry():
             
             db.session.execute(insert(Entry),[
                 {"title":title, "name":name, "password":password, "url":url}
-            ])         
+            ])        
             return redirect(url_for("views.workspace"))
             
         except ValueError:
