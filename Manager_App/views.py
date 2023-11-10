@@ -14,8 +14,10 @@ def workspace():
         groups = db.session.execute(select(Group)).columns("group_name").all()
         #! Don't know why it doesn't work just gives me Keyerror...
         #TODO Fix it!
-        #entries = db.session.execute(select(Entry)).columns("title","name","password","url").all()
-        #entries = db.get_or_404(Entry.title, Entry.name, Entry.password, Entry.url)
+        entries = db.session.execute(select(Entry)).all()
+        #entries = db.session.execute(select(Entry.title, Entry.name, Entry.password, Entry.url)).fetchall()
+        print(entries)
+        #entries = db.get_or_404(Entry, 1)
     
     return render_template("organizethis.html", db_name=db_name, groups=groups)
 

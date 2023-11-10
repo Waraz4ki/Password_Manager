@@ -4,10 +4,9 @@ import hashlib
 
 from werkzeug.security import check_password_hash
 
-from Manager_App import app
-from Manager_App.models import Base, Entry, Group, Config, db
+from Manager_App.better_models import Base, Entry, Group, Database, db
 
-from sqlalchemy import select
+from sqlalchemy import insert, select
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 
 auth = Blueprint("auth", __name__)
@@ -22,17 +21,17 @@ def openDatabase():
     if request.method == "POST":
         try:
             db_name = request.form.get("db_name")
-            if os.path.exists(f"instance/{db_name}.db") is False:
-                raise FileNotFoundError
+            
+            #TODO Check if Database does or does not exist
             
             master_key = hashlib.sha256(request.form.get("master_key").encode(), usedforsecurity=True).hexdigest()
             print(master_key)
-            hashed_master_key = db.session.execute(select(Config.master_key)).fetchone()[0]
-            print(hashed_master_key)
             
+            #! 1 Error only exists when relationship stuff is in use
+            hashed_master_key = db.session.execute(select(Database.master_key).where(Database.name==db_name)).fetchone()[0]
+            print(hashed_master_key)
+                      
             if master_key == hashed_master_key:
-            #TODO If you have time figure out why this won't work
-            #if check_password_hash(hashed_master_key, master_key):
                 print("Success")
                 return redirect(url_for("views.workspace", db_name=db_name))
             else:
@@ -50,20 +49,13 @@ def createDatabase():
     if request.method == "POST":
         try:
             db_name = request.form.get("db_name")
-            if os.path.exists(f"data/{db_name}.db"):
-                app.config.update(
-                    SQLALCHEMY_DATABASE_URI = f"sqlite:///{db_name}.db"
-                )
-                with app.app_context():
-                    db.create_all()
-            else:
-                raise FileExistsError
+            master_key = hashlib.sha256(request.form.get("master_key").encode(), usedforsecurity=True).hexdigest()
             
-            configuration = Config(
-                master_key = hashlib.sha256(request.form.get("master_key").encode(), usedforsecurity=True).hexdigest(),
-            )
+            #TODO Check if database already exists
             
-            db.session.add(configuration)
+            db.session.execute(insert(Database).values(
+                {"name":db_name, "master_key":master_key}
+            ))
             db.session.commit()
             
             return redirect(url_for("auth.openDatabase"))
