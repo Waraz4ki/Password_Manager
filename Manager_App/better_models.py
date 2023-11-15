@@ -1,15 +1,13 @@
+import hashlib
 from . import db
 
+from flask_login import UserMixin
 from typing import Any, Optional, List
-from sqlalchemy import ForeignKey, Integer, String
-from sqlalchemy.sql import func
+from sqlalchemy import ForeignKey, Integer, String, select
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
-class Base(DeclarativeBase):
-    pass
 
-
-class Database(db.Model):
+class Database(db.Model, UserMixin):
     __tablename__ = "database"
     
     id : Mapped[int] = mapped_column(primary_key=True)
@@ -18,10 +16,20 @@ class Database(db.Model):
     
     #contained_groups : Mapped[Optional[List["Group"]]] = relationship(back_populates="assigned_database")
     
-    def is_authenticated():
-        pass
-
-
+    #def is_authenticated(db_name, master_key):
+    #    db_id = db.session.execute(select(Database.id).where(Database.name==db_name)).fetchone()[0]
+    #    master_key = hashlib.sha256(master_key.encode()).hexdigest()
+    #    hashed_master_key = db.session.get(Database.master_key, db_id)
+    #    
+    #    if hashed_master_key == master_key:
+    #        return True
+    #    else:
+    #        return False
+    #
+    #def is_active():
+    #    pass
+    
+    
 class Group(db.Model):
     __tablename__ = "group"
     

@@ -45,3 +45,4 @@ class AESCipher:
         cipher = AES.new(key, AES.MODE_CBC, iv=iv)
         decrypted_data = unpad(cipher.decrypt(data), AES.block_size)
         return decrypted_data
+    
