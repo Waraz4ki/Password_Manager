@@ -1,16 +1,39 @@
 from . import db
 from sqlalchemy.sql import func
+from typing import Any, Optional, List
+from sqlalchemy.orm import DeclarativeBase, relationship, Mapped, mapped_column
+
+class Base(DeclarativeBase):
+    pass
+
+class Config(db.Model):
+    __tablename__ = "Config"
+
+    master_key : Mapped[str] = mapped_column(primary_key=True)
+
+    def __repr__(self) -> str:
+        return f"{self.master_key}"    
+
 
 class Entry(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    title = db.Column(db.String())
-    name = db.Column(db.String())
-    email = db.Column(db.String())
-    password = db.Column(db.String())
-    notes = db.Column(db.String(1500))
-    date = db.Column(db.DateTime(timezone=True), default=func.now())
+    __tablename__ = "Entry"
+
+    id : Mapped[int] = mapped_column(primary_key=True)
+    title : Mapped[Optional[str]]
+    name : Mapped[Optional[str]]
+    password : Mapped[Optional[str]]
+    url : Mapped[Optional[str]]
+
+    def __repr__(self) -> str:
+        return f"{self.id}, {self.title}, {self.name}, {self.password}, {self.url}"
+
 
 class Group(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    group_name = db.Column(db.String(), unique = True)
-    entrys = db.relationship("Entry")
+    __tablename__ = "Group"
+    
+    id : Mapped[int] = mapped_column(primary_key=True)
+    group_name : Mapped[Optional[str]]
+
+    def __rep__(self) -> str:
+        return f"{self.id}, {self.group_name}"
+

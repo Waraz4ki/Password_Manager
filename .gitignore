@@ -1,6 +1,7 @@
 data/
 env/
 backup/
+Alchemy/
 
 .venv/
 

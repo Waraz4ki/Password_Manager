@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="{{url_for('static', filename='styles/addEntry.css')}}">
+  <title>Open Database</title>
+</head>
+<body>
+    <section>
+        <div class="form-box">
+            <div class="form-value">
+                <form class="from" method="POST">
+                    <h2>Add Entry</h2>
+                    <div class="inputbox">
+                        <ion-icon name="navigate-outline"></ion-icon>
+                        <input name="title" id="title" type="text" required>
+                        <label for="">Title</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <input name="name" id="name" type="text" required>
+                        <label for="">Name</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="key-outline"></ion-icon>
+                        <input name="password" id="password" type="password" required>
+                        <label for="">Password</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="git-network-outline"></ion-icon>
+                        <input name="url" id="url" type="text" required>
+                        <label for="">URL</label>
+                    </div>
+                    <button type="submit">Confirm</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

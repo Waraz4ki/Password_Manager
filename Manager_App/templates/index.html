@@ -23,13 +23,13 @@
                 <form class="from" method="POST">
                     <h2>Open Database</h2>
                     <div class="inputbox">
-                        <ion-icon name="key-outline"></ion-icon>
-                        <input name="masterKEY" id="masterKEY" type="password" required>
+                        <ion-icon name="key-outline" onclick="showpass()"></ion-icon>
+                        <input name="master_key" id="master_key" type="password" required>
                         <label for="">Master Key</label>
                     </div>
                     <div class="inputbox">
                         <ion-icon name="lock-closed-outline"></ion-icon>
-                        <input name="DATABASE" id="DATABASE" type="text" required>
+                        <input name="db_name" id="db_name" type="text" required>
                         <label for="">Database</label>
                     </div>
                     <div class="forget">
@@ -46,8 +46,7 @@
             </div>
         </div>
     </section>
-    <script type="module" src="/UI_SERVER/static/key-outline.svg"></script>
-    
+    <script language="JavaScript" src="/static/src/showpass.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
