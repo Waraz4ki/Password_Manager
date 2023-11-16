@@ -23,9 +23,18 @@
                             </div>
                         </div>
                         <div class="dropdown">
+                            <button class="dropbtn">Group</button>
+                            <div class="dropdown-content">
+                                <a href="/workspace/{{db_name}}/add_group">Add Group</a>
+                                <a href="#">Edit Group</a>
+                                <a href="#">Duplicate Group</a>
+                                <a href="#">Delete Group</a>
+                            </div>
+                        </div>                        
+                        <div class="dropdown">
                             <button class="dropbtn">Entry</button>
                             <div class="dropdown-content">
-                                <a href="/workspace/{{db_name}}/add_entry">Add Entry</a>
+                                <a href="/workspace/{{current_user.name}}/add_entry">Add Entry</a>
                                 <a href="#">Edit Entry</a>
                                 <a href="#">Duplicate Entry</a>
                                 <a href="#">Delete Entry</a>
@@ -63,10 +72,16 @@
                 <div class="Group-Container" name="Group">
                     <p class="Title" style="color: white;", align="center">{{current_user.name}}</p>
                     <div class="group-content" name="group">
+                        <!--Switching between groups causes the last button in the entries to shift the column titles around!-->
                         {% for group in groups %}
-                            <div class="group">
-                                <button class="groupselect" name="groupselect"><ion-icon name="folder-open-outline"></ion-icon>{{group}}</button>
-                            </div>
+                            {% for row in group %}
+                                <form action="/workspace/{{current_user.name}}/{{row}}" method="post">
+                                    <div class="group">
+                                        <!--<input type="button" name="current_group" id="current_group" value="{{row}}"><ion-icon name="folder-open-outline"></ion-icon>-->
+                                        <button type="submit" name="group" value="{{row}}">{{row}}</button>
+                                    </div>
+                                </form>
+                            {% endfor %}
                         {% endfor %}
                     </div>
                 </div>
@@ -101,7 +116,7 @@
                 </div>
             </footer>
         </section>
-        <script lang="JavaScript" src="/static/src/selectgroup.js"></script>
+        <script lang="JavaScript" src="/static/src/functionality.js"></script>
         <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     </body>

@@ -3,8 +3,8 @@ from . import db
 
 from flask_login import UserMixin
 from typing import Any, Optional, List
-from sqlalchemy import ForeignKey, Integer, String, select
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+from sqlalchemy import ForeignKey, Integer, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
 class Database(db.Model, UserMixin):
