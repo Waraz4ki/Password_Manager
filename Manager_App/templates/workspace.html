@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 {% if current_user.is_authenticated %}
+    {% with messages = get_flashed_messages(category_filter="error")%}
+        {%if messages %}
+            {%for message in messages%}
+                <div class="alert">
+                    {{message}}
+                    <button class="acknowledge" name="acknowledge" type="submit" onclick="acknowledge()">
+                        Ok
+                    </button>
+                </div>
+            {%endfor%}
+        {% endif%}
+    {% endwith%}
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
