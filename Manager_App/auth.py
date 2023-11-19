@@ -31,7 +31,7 @@ def open_database():
                 return redirect(url_for("views.workspace", db_name=db_name, db_id=db_id))
         except TypeError:
             flash("Database doesn't exist", category="error")
-    return render_template("index.html")
+    return render_template("open_database.html")
 
 
 @auth.route("/logout")
