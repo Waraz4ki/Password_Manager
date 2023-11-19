@@ -5,4 +5,9 @@ function showpass() {
     } else {
       key_input.type = "password";
     }
-} 
+}
+
+function acknowledge() {
+  const element = document.getElementsByClassName("alert")
+  element.remove()
+}

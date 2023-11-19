@@ -3,7 +3,7 @@ import sys
 import hashlib
 
 from flask_login import login_user, login_required, logout_user, current_user
-from flask import Blueprint, render_template, flash, redirect, url_for, request, make_response
+from flask import Blueprint, render_template, flash, redirect, url_for, request, make_response, abort
 
 from sqlalchemy import insert, select
 
@@ -16,19 +16,22 @@ auth = Blueprint("auth", __name__)
 @auth.route("/", methods=["GET", "POST"])
 def open_database():
     if request.method == "POST":
-        db_name = request.form.get("db_name")
-        db_id = db.session.execute(select(Database.id).where(Database.name==db_name)).fetchone()[0]
-        #TODO Check if Database already exists!!!!
-        
-        master_key = hashlib.sha256(request.form.get("master_key").encode(), usedforsecurity=True).hexdigest()
-        hashed_master_key = db.session.execute(select(Database.master_key).where(Database.id==db_id)).fetchone()[0]
-        
-        if hashed_master_key == master_key:
-            db_obj = db.session.get(Database, db_id)
-            login_user(db_obj)
-            
-            return redirect(url_for("views.workspace", db_name=db_name, db_id=db_id))
-    return render_template("index.html")
+        try:
+            db_name = request.form.get("db_name")
+            db_id = db.session.execute(select(Database.id).where(Database.name==db_name)).fetchone()[0]
+            #TODO Check if Database already exists!!!!
+
+            master_key = hashlib.sha256(request.form.get("master_key").encode(), usedforsecurity=True).hexdigest()
+            hashed_master_key = db.session.execute(select(Database.master_key).where(Database.id==db_id)).fetchone()[0]
+
+            if hashed_master_key == master_key:
+                db_obj = db.session.get(Database, db_id)
+                login_user(db_obj)
+
+                return redirect(url_for("views.workspace", db_name=db_name, db_id=db_id))
+        except TypeError:
+            flash("Database doesn't exist", category="error")
+    return render_template("open_database.html")
 
 
 @auth.route("/logout")
