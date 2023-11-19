@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block stylelink %}<link rel="stylesheet" href="{{url_for('static', filename='styles/{% block style %}{% endblock %}')}}">{% endblock %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    {% with messages = get_flashed_messages(category_filter="error")%}
+        {%if messages %}
+            {%for message in messages%}
+                <div class="alert">
+                    {{message}}
+                    <button class="acknowledge" type="submit" onclick="acknowledge()">
+                        Ok
+                    </button>
+                </div>
+            {%endfor%}
+        {% endif%}
+    {% endwith%}
+    <section>{% block content %}{% endblock %}</section>
+    <script language="JavaScript" src="/static/src/functionality.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
